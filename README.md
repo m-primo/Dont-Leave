@@ -1,7 +1,6 @@
 <img src="img/icon.svg" width="512">
 
-# Don't Leave
-## V1.0.0
+# Don't Leave (V1.0.0)
 This browser extension prevents your important tabs from closing, reloading, or leaving in order to keep you focused.
 It'll alert you with a message if you try to close, reload, or leave the page anyway.
 
