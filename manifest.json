@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Don't Leave",
+    "version": "1.0.0",
+    "description": "This browser extension prevents your important tabs from closing, reloading, or leaving in order to keep you focused.",
+    "icons": {
+        "16": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "browser_action": {
+        "default_icon": "img/icon.png",
+        "default_popup": "popup.html",
+        "icons": ["img/icon.svg"]
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "<all_urls>"
+    ]
+}

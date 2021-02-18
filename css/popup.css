@@ -1,0 +1,64 @@
+* {
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+html {
+    font-size: 16px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 300px;
+    width: 300px;
+    max-width: 300px;
+    background-color: #fff;
+}
+.fullCenter {
+    text-align: center;
+    margin: 10px;
+    border: 2px solid blueviolet;
+    padding: 10px;
+}
+.active {
+    color: green;
+}
+.inactive {
+    color: red;
+}
+.button {
+    padding: 0.75rem 1rem;
+    display: inline-block;
+    border-radius: 6px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    border-style: none;
+    cursor: pointer;
+}
+.button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+#app-icon {
+    width: 64px;
+}
+#app-name {
+    color: blueviolet;
+}
+#app-version {
+    color: darkgray;
+}
+#status {
+    font-size: 18px;
+    font-weight: bold;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    padding: 4px 0;
+}
+#startButton {
+    color: #037dd6;
+    border: 1px solid #b0d7f2;
+    background-color: #fff;
+}
+#startButton:hover {
+    box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+    border-color: #037dd6;
+}
