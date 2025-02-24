@@ -1,6 +1,10 @@
 function putCScript() {
-    chrome.tabs.executeScript({
-        file: '/js/cscript.js'
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTabId = tabs[0].id;
+        chrome.scripting.executeScript({
+            target: { tabId: activeTabId },
+            files: ['/js/cscript.js']
+        });
     });
 }
 // =============================================================================
@@ -10,11 +14,11 @@ function getId(id) {
 // =============================================================================
 const MANIFEST = chrome.runtime.getManifest();
 getId('html-title').innerHTML = MANIFEST.name;
-getId('app-icon').src = chrome.extension.getURL(MANIFEST.browser_action.icons[0]);
+getId('app-icon').src = chrome.runtime.getURL(MANIFEST.action.default_icon);
 getId('app-name').innerHTML = MANIFEST.name;
-getId('app-version').innerHTML = 'V'+MANIFEST.version;
+getId('app-version').innerHTML = 'V' + MANIFEST.version;
 // =============================================================================
-function changeStatus(_text,_class) {
+function changeStatus(_text, _class) {
     getId('status').innerHTML = _text;
     getId('status').setAttribute('class', _class);
 }
@@ -22,28 +26,35 @@ function getCheckStatus() {
     return document.body.contains(document.getElementById('cScript_preventer--check'));
 }
 function checkStatus(status) {
-    if(status==true) {
-        changeStatus('Active','active');
-        getId('startButton').setAttribute('disabled','disabled');
+    if (status) {
+        changeStatus('Active', 'active');
+        getId('startButton').setAttribute('disabled', 'disabled');
     } else {
-        changeStatus('Inactive','inactive');
+        changeStatus('Inactive', 'inactive');
         getId('startButton').removeAttribute('disabled');
     }
 }
 function checkAndExecuteStatus() {
-    chrome.tabs.executeScript({
-        code: '(' + getCheckStatus + ')();'
-    }, (results) => {
-        checkStatus(results[0]);
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs && tabs[0] && tabs[0].id) {
+            const activeTabId = tabs[0].id;
+            chrome.scripting.executeScript(
+            {
+                target: { tabId: activeTabId },
+                func: getCheckStatus
+            }, (results) => {
+                checkStatus(results && results[0] && results[0].result);
+            });
+        }
     });
 }
 // =============================================================================
-getId('startButton').addEventListener('click', function(){
+getId('startButton').addEventListener('click', function () {
     console.log('startButton: clicked');
     putCScript();
-    setTimeout(function(){
+    setTimeout(function () {
         checkAndExecuteStatus();
-    },100);
+    }, 100);
 });
 // =============================================================================
 checkAndExecuteStatus();
